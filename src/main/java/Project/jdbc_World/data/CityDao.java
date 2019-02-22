@@ -21,5 +21,4 @@ public interface CityDao {
 	City update(City city);
 
 	int delete(City city);
-
 }

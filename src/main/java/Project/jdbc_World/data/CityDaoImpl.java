@@ -214,9 +214,7 @@ public class CityDaoImpl implements CityDao {
 		}
 		return result;
 	}
-
 	private City creatCityFormatResultSet(ResultSet rs) throws SQLException {
 		return new City(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5));
 	}
-
 }

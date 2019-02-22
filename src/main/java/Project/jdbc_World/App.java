@@ -19,7 +19,6 @@ public class App {
 
 	public static void main(String[] args) throws SQLException {
 
-
 		CityDaoImpl dao = new CityDaoImpl();
 		boolean Running = true;
 

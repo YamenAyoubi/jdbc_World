@@ -12,8 +12,6 @@ public class DoYouWannaDoMore {
 	static LocalTime Now = LocalTime.now();
 	static Scanner in = new Scanner (System.in);
 	
-
-	
 	public static boolean PlayAgain(String answer) {
 		
 		String upperCaseString = answer.toUpperCase();

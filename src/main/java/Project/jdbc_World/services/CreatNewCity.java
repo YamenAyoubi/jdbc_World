@@ -10,7 +10,6 @@ public class CreatNewCity {
 	
 	public static City creat() {
 		
-		
 		int Id;
 		String Name;
 		String CountryCode;
