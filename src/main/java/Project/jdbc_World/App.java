@@ -18,10 +18,9 @@ public class App {
 
 	public static void main(String[] args) throws SQLException {
 
-		
 		City Update = new City(11121, "Aleppooo", "AFG", "BMW", 47000);
 		CityDaoImpl dao = new CityDaoImpl();
-		boolean Running=true;
+		boolean Running = true;
 
 		while (Running) {
 			System.out.println("Welcome To DataBase " + "\n1-Find By ID " + "\n2-Find By Code " + "\n3-Find By Name "
@@ -61,9 +60,10 @@ public class App {
 			default:
 				break;
 			}
-		
-		System.out.println("\nDo You Want To Access To Data Base Again ? (Y/N)");
-		String answer = DoYouWannaDoMore.GetPlayAgainAnswer().toUpperCase();
-		Running = DoYouWannaDoMore.PlayAgain(answer);
-		}}
+
+			System.out.println("\nDo You Want To Access To Data Base Again ? (Y/N)");
+			String answer = DoYouWannaDoMore.GetPlayAgainAnswer().toUpperCase();
+			Running = DoYouWannaDoMore.PlayAgain(answer);
+		}
+	}
 }

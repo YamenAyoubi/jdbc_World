@@ -1,6 +1,5 @@
 package Project.jdbc_World.data;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +12,6 @@ import Project.jdbc_World.data.models.City;
 
 public class CityDaoImpl implements CityDao {
 
-	
 	private PreparedStatement creatPreparedStatementAdd(Connection conn, City city) throws SQLException {
 		PreparedStatement statement = conn.prepareStatement("INSERT INTO city VALUES (?,?,?,?,?)");
 		statement.setInt(1, city.getId());
@@ -21,8 +19,9 @@ public class CityDaoImpl implements CityDao {
 		statement.setString(3, city.getCountryCode());
 		statement.setString(4, city.getDistrict());
 		statement.setInt(5, city.getPopulation());
-		return statement;}
-	
+		return statement;
+	}
+
 	@Override
 	public City add(City city) {
 
@@ -44,6 +43,7 @@ public class CityDaoImpl implements CityDao {
 		statement.setInt(1, city.getId());
 		return statement;
 	}
+
 	@Override
 	public int delete(City city) {
 
@@ -64,6 +64,7 @@ public class CityDaoImpl implements CityDao {
 		statement.getResultSet();
 		return statement;
 	}
+
 	@Override
 	public List<City> findAll() {
 
@@ -87,10 +88,10 @@ public class CityDaoImpl implements CityDao {
 
 	private PreparedStatement creatPreparedStatementFindByCode(Connection conn, String Code) throws SQLException {
 		PreparedStatement statement = conn.prepareStatement("SELECT * FROM city WHERE CountryCode like ?");
-		statement.setString(1, Code+"%");
+		statement.setString(1, Code + "%");
 		return statement;
 	}
-	
+
 	@Override
 	public List<City> findByCode(String code) {
 
@@ -116,6 +117,7 @@ public class CityDaoImpl implements CityDao {
 		statement.setInt(1, number);
 		return statement;
 	}
+
 	@Override
 	public City findById(int id) {
 
@@ -137,10 +139,10 @@ public class CityDaoImpl implements CityDao {
 
 	private PreparedStatement creatPreparedStatementFindByName(Connection conn, String Name) throws SQLException {
 		PreparedStatement statement = conn.prepareStatement("SELECT * FROM city WHERE Name like ?");
-		statement.setString(1, Name+"%");
+		statement.setString(1, Name + "%");
 		return statement;
 	}
-	
+
 	@Override
 	public List<City> findByName(String name) {
 
@@ -184,6 +186,7 @@ public class CityDaoImpl implements CityDao {
 		statement.setInt(3, city.getId());
 		return statement;
 	}
+
 	@Override
 	public City update(City city) {
 
@@ -199,6 +202,7 @@ public class CityDaoImpl implements CityDao {
 		}
 		return city;
 	}
+
 	private List<City> creatCityFormatResultList(ResultSet rs) throws SQLException {
 
 		List<City> result = new ArrayList<>();
@@ -213,7 +217,6 @@ public class CityDaoImpl implements CityDao {
 
 	private City creatCityFormatResultSet(ResultSet rs) throws SQLException {
 		return new City(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5));
-	}	
-	
+	}
 
 }
