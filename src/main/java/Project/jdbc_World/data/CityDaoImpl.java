@@ -1,5 +1,6 @@
 package Project.jdbc_World.data;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +13,16 @@ import Project.jdbc_World.data.models.City;
 
 public class CityDaoImpl implements CityDao {
 
+	
+	private PreparedStatement creatPreparedStatementAdd(Connection conn, City city) throws SQLException {
+		PreparedStatement statement = conn.prepareStatement("INSERT INTO city VALUES (?,?,?,?,?)");
+		statement.setInt(1, city.getId());
+		statement.setString(2, city.getName());
+		statement.setString(3, city.getCountryCode());
+		statement.setString(4, city.getDistrict());
+		statement.setInt(5, city.getPopulation());
+		return statement;}
+	
 	@Override
 	public City add(City city) {
 
@@ -28,71 +39,11 @@ public class CityDaoImpl implements CityDao {
 		return city;
 	}
 
-	private List<City> creatCityFormatResultList(ResultSet rs) throws SQLException {
-
-		List<City> result = new ArrayList<>();
-
-		while (rs.next()) {
-			City Found = new City(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5));
-			result.add(Found);
-
-		}
-		return result;
-	}
-
-	private City creatCityFormatResultSet(ResultSet rs) throws SQLException {
-		return new City(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5));
-	}
-
-	private PreparedStatement creatPreparedStatement(Connection conn, int number) throws SQLException {
-		PreparedStatement statement = conn.prepareStatement("SELECT * FROM city WHERE id=?");
-		statement.setInt(1, number);
-		return statement;
-	}
-
-	private PreparedStatement creatPreparedStatementAdd(Connection conn, City city) throws SQLException {
-		PreparedStatement statement = conn.prepareStatement("INSERT INTO city VALUES (?,?,?,?,?)");
-		statement.setInt(1, city.getId());
-		statement.setString(2, city.getName());
-		statement.setString(3, city.getCountryCode());
-		statement.setString(4, city.getDistrict());
-		statement.setInt(5, city.getPopulation());
-		return statement;
-	}
-
 	private PreparedStatement creatPreparedStatementDelete(Connection conn, City city) throws SQLException {
 		PreparedStatement statement = conn.prepareStatement("DELETE FROM city WHERE id=?");
 		statement.setInt(1, city.getId());
 		return statement;
 	}
-
-	private PreparedStatement creatPreparedStatementFindAll(Connection conn) throws SQLException {
-		PreparedStatement statement = conn.prepareStatement("SELECT * FROM city ");
-		statement.getResultSet();
-		return statement;
-	}
-
-	private PreparedStatement creatPreparedStatementFindByCode(Connection conn, String Code) throws SQLException {
-		PreparedStatement statement = conn.prepareStatement("SELECT * FROM city WHERE CountryCode like ?");
-		statement.setString(1, Code);
-		return statement;
-	}
-
-	private PreparedStatement creatPreparedStatementFindByName(Connection conn, String Name) throws SQLException {
-		PreparedStatement statement = conn.prepareStatement("SELECT * FROM city WHERE Name like ?");
-		statement.setString(1, Name);
-		return statement;
-	}
-
-	private PreparedStatement creatPreparedStatementUpdate(Connection conn, City city) throws SQLException {
-		PreparedStatement statement = conn.prepareStatement("UPDATE city set name = ?,Population=? where id = ?");
-
-		statement.setString(1, city.getName());
-		statement.setInt(2, city.getPopulation());
-		statement.setInt(3, city.getId());
-		return statement;
-	}
-
 	@Override
 	public int delete(City city) {
 
@@ -104,9 +55,15 @@ public class CityDaoImpl implements CityDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return 0;
+		System.out.println("<City With below Id Has Been Removed>");
+		return city.getId();
 	}
 
+	private PreparedStatement creatPreparedStatementFindAll(Connection conn) throws SQLException {
+		PreparedStatement statement = conn.prepareStatement("SELECT * FROM city ");
+		statement.getResultSet();
+		return statement;
+	}
 	@Override
 	public List<City> findAll() {
 
@@ -128,6 +85,12 @@ public class CityDaoImpl implements CityDao {
 		return result;
 	}
 
+	private PreparedStatement creatPreparedStatementFindByCode(Connection conn, String Code) throws SQLException {
+		PreparedStatement statement = conn.prepareStatement("SELECT * FROM city WHERE CountryCode like ?");
+		statement.setString(1, Code+"%");
+		return statement;
+	}
+	
 	@Override
 	public List<City> findByCode(String code) {
 
@@ -148,13 +111,18 @@ public class CityDaoImpl implements CityDao {
 		return result;
 	}
 
+	private PreparedStatement creatPreparedStatementbyId(Connection conn, int number) throws SQLException {
+		PreparedStatement statement = conn.prepareStatement("SELECT * FROM city WHERE id=?");
+		statement.setInt(1, number);
+		return statement;
+	}
 	@Override
 	public City findById(int id) {
 
 		City result = null;
 
 		try (Connection conn = DatabaseAlt.getConnection();
-				PreparedStatement statement = creatPreparedStatement(conn, id);
+				PreparedStatement statement = creatPreparedStatementbyId(conn, id);
 				ResultSet rs = statement.executeQuery()) {
 			while (rs.next()) {
 				return creatCityFormatResultSet(rs);
@@ -167,6 +135,12 @@ public class CityDaoImpl implements CityDao {
 		return result;
 	}
 
+	private PreparedStatement creatPreparedStatementFindByName(Connection conn, String Name) throws SQLException {
+		PreparedStatement statement = conn.prepareStatement("SELECT * FROM city WHERE Name like ?");
+		statement.setString(1, Name+"%");
+		return statement;
+	}
+	
 	@Override
 	public List<City> findByName(String name) {
 
@@ -202,6 +176,14 @@ public class CityDaoImpl implements CityDao {
 		}
 	}
 
+	private PreparedStatement creatPreparedStatementUpdate(Connection conn, City city) throws SQLException {
+		PreparedStatement statement = conn.prepareStatement("UPDATE city set name = ?,Population=? where id = ?");
+
+		statement.setString(1, city.getName());
+		statement.setInt(2, city.getPopulation());
+		statement.setInt(3, city.getId());
+		return statement;
+	}
 	@Override
 	public City update(City city) {
 
@@ -217,5 +199,21 @@ public class CityDaoImpl implements CityDao {
 		}
 		return city;
 	}
+	private List<City> creatCityFormatResultList(ResultSet rs) throws SQLException {
+
+		List<City> result = new ArrayList<>();
+
+		while (rs.next()) {
+			City Found = new City(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5));
+			result.add(Found);
+
+		}
+		return result;
+	}
+
+	private City creatCityFormatResultSet(ResultSet rs) throws SQLException {
+		return new City(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5));
+	}	
+	
 
 }
