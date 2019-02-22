@@ -8,6 +8,7 @@ import Project.jdbc_World.data.CityDaoImpl;
 import Project.jdbc_World.data.models.City;
 import Project.jdbc_World.services.CreatNewCity;
 import Project.jdbc_World.services.DoYouWannaDoMore;
+import Project.jdbc_World.services.UpdateCity;
 
 /**
  * Hello world!
@@ -18,7 +19,7 @@ public class App {
 
 	public static void main(String[] args) throws SQLException {
 
-		City Update = new City(11121, "Aleppooo", "AFG", "BMW", 47000);
+
 		CityDaoImpl dao = new CityDaoImpl();
 		boolean Running = true;
 
@@ -50,7 +51,7 @@ public class App {
 				System.out.println(dao.add(CreatNewCity.creat()));
 				break;
 			case 6:
-				System.out.println(dao.update(Update));
+				System.out.println(dao.update(UpdateCity.Update()));
 				break;
 			case 7:
 				System.out.println("Please Type The City ID You Want To Delete : ");
