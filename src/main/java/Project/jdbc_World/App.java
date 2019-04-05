@@ -23,8 +23,8 @@ public class App {
 		boolean Running = true;
 
 		while (Running) {
-			System.out.println("Welcome To DataBase " + "\n1-Find By ID " + "\n2-Find By Code " + "\n3-Find By Name "
-					+ "\n4-Find All" + "\n5-Add City " + "\n6-Update City " + "\n7-Delete City");
+			System.out.println("=== Welcome To DataBase === " + "\n====== 1-Find By ID =======" + "\n===== 2-Find By Code ======"
+					+ "\n===== 3-Find By Name ======" + "\n======= 4-Find All ========" + "\n======= 5-Add City ========" + "\n====== 6-Update City ======" + "\n====== 7-Delete City ======");
 
 			int Selections = in.nextInt();
 
