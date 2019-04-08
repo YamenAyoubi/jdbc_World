@@ -49,14 +49,15 @@ public class CityDaoImpl implements CityDao {
 
 		try (Connection conn = DatabaseAlt.getConnection();
 				PreparedStatement statement = creatPreparedStatementDelete(conn, city);) {
-
+			
 			statement.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println("<City With below Id Has Been Removed>");
-		return city.getId();
+		
+		System.out.println("<City Has Been Removed>");
+		return 0;
 	}
 
 	private PreparedStatement creatPreparedStatementFindAll(Connection conn) throws SQLException {
